@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
+    namespace 'com.tengu.sharetoclipboard'
     compileSdkVersion 31
 
     defaultConfig {
