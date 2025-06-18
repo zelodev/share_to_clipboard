@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 
 android {
     namespace 'com.tengu.sharetoclipboard'
-    compileSdkVersion 31
+    compileSdkVersion 33
 
     defaultConfig {
         applicationId "com.tengu.sharetoclipboard"
         minSdkVersion 15
-        targetSdkVersion 31
-        versionCode 31
+        targetSdkVersion 33
+        versionCode 33
         versionName "1.15.1"
     }
 
