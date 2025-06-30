@@ -2,7 +2,15 @@ name: Android CI
 
 on:
   workflow_dispatch:
-
+    inputs:
+      build_type:
+        description: 'Build type'
+        required: true
+        default: 'debug'
+        type: choice
+        options:
+          - debug
+          - release
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -17,14 +25,23 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
+    - name: Restore Keystore
+      run: |
+        echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > ./keystore.jks
+      env:
+        KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
     - name: Build with Gradle
-      run: ./gradlew assembleDebug --warning-mode all --no-daemon --parallel --build-cache
+      env:
+        KSTOREPWD: ${{ secrets.KSTOREPWD }}
+        signingStoreLocation: ${{ github.workspace }}/keystore.jks
+      run: ./gradlew assemble${{ github.event.inputs.build_type == 'release' && 'Release' || 'Debug' }} --warning-mode all --no-daemon --parallel --build-cache
 
     - name: Upload APK artifact
       uses: actions/upload-artifact@v4
       with:
-        name: app-debug-apk
-        path: app/build/outputs/apk/debug/app-debug.apk
+        name: app-${{ github.event.inputs.build_type }}-apk
+        path: app/build/outputs/apk/${{ github.event.inputs.build_type }}/app-${{ github.event.inputs.build_type }}.apk
