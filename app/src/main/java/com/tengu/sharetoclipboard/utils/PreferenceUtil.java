@@ -2,7 +2,7 @@ package com.tengu.sharetoclipboard.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
+import androidx.preference.PreferenceManager;
 
 /**
  * Created by tal on 05/09/17.
