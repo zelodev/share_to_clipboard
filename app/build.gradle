@@ -43,7 +43,8 @@ android {
         disable 'MissingTranslation'
     }
 
-    if (System.getenv("signingStoreLocation") != null) {
+    if (System.getenv("signingStoreLocation") != null &&
+    System.getenv("signingKeyAlias") != null) {
 
         println "Found sign properties in gradle.properties! Signing build…"
 
@@ -51,6 +52,7 @@ android {
             release {
                 storeFile = file(System.getenv("signingStoreLocation"))
                 storePassword = System.getenv("KSTOREPWD")
+                keyAlias = System.getenv("signingKeyAlias")
                 keyPassword = System.getenv("KSTOREPWD")
             }
         }
