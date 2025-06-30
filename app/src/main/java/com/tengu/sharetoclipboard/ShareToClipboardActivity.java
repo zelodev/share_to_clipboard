@@ -54,7 +54,7 @@ public class ShareToClipboardActivity extends Activity {
     }
 
     private void handleSendVCard(Intent intent) {
-        Uri uri = (Uri) intent.getExtras().get(Intent.EXTRA_STREAM);
+        Uri uri = intent.getParcelableExtra(Intent.EXTRA_STREAM, Uri.class);
 
         VCard vcard;
         try {
@@ -124,7 +124,7 @@ public class ShareToClipboardActivity extends Activity {
             return;
         }
 
-        Uri uri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
+        Uri uri = intent.getParcelableExtra(Intent.EXTRA_STREAM, Uri.class);
         ClipboardManager clipboard = (android.content.ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
         ClipData clip = ClipData.newUri(getContentResolver(), "image", uri);
         clipboard.setPrimaryClip(clip);
