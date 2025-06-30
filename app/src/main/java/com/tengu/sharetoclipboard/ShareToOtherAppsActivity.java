@@ -38,11 +38,7 @@ public class ShareToOtherAppsActivity extends Activity {
         Intent intent = baseIntent.cloneFilter();
 
         for (String key : bundle.keySet()) {
-            if (bundle.get(key) instanceof String) {
-                intent.putExtra(key, (String) bundle.get(key));
-            } else {
-                intent.putExtra(key, String.valueOf(bundle.get(key)));
-            }
+            intent.putExtra(key, String.valueOf(bundle.get(key)));
         }
         shareExceptCurrentApp(intent);
 
