@@ -43,16 +43,14 @@ android {
         disable 'MissingTranslation'
     }
 
-    if (project.hasProperty('signingStoreLocation') &&
-        project.hasProperty('signingKeyAlias')) {
+    if (System.getenv("signingStoreLocation") != null) {
 
         println "Found sign properties in gradle.properties! Signing build…"
 
         signingConfigs {
             release {
-                storeFile = file(signingStoreLocation)
+                storeFile = file(System.getenv("signingStoreLocation"))
                 storePassword = System.getenv("KSTOREPWD")
-                keyAlias = signingKeyAlias
                 keyPassword = System.getenv("KSTOREPWD")
             }
         }
