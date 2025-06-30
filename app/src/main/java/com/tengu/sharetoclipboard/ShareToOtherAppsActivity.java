@@ -15,8 +15,26 @@ public class ShareToOtherAppsActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent baseIntent = getIntent().getParcelableExtra("intent");
+        
+        Intent baseIntent = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            baseIntent = getIntent().getParcelableExtra("intent", Intent.class);
+        } else {
+            // fallback
+            baseIntent = getIntent().getParcelableExtra("intent");
+        }
+
+        if (baseIntent == null) {
+            finish();
+            return;
+        }
+
         Bundle bundle = baseIntent.getExtras();
+        if (bundle == null) {
+            finish();
+            return;
+        }
+
         Intent intent = baseIntent.cloneFilter();
 
         for (String key : bundle.keySet()) {
@@ -32,7 +50,15 @@ public class ShareToOtherAppsActivity extends Activity {
         intent.setComponent(null);
 
         PackageManager packageManager = getPackageManager();
-        List<ResolveInfo> activities = packageManager.queryIntentActivities(intent, 0);
+        List<ResolveInfo> activities;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            activities = packageManager.queryIntentActivities(intent, PackageManager.ResolveInfoFlags.of(0));
+        } else {
+            // fallback
+            activities = packageManager.queryIntentActivities(intent, 0);
+        }
+
         String packageNameToHide = getPackageName();
         ArrayList<Intent> targetIntents = new ArrayList<>();
         for (ResolveInfo currentInfo : activities) {
