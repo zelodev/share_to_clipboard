@@ -37,6 +37,7 @@ jobs:
     - name: Build with Gradle
       env:
         KSTOREPWD: ${{ secrets.KSTOREPWD }}
+        signingKeyAlias: ${{ secrets.KEYALIAS }}
         signingStoreLocation: ${{ github.workspace }}/keystore.jks
       run: ./gradlew assemble${{ github.event.inputs.build_type == 'release' && 'Release' || 'Debug' }} --warning-mode all --no-daemon --parallel --build-cache
 
