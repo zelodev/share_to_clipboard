@@ -48,6 +48,10 @@ android {
     } else {
         buildTypes.release.signingConfig = null
     }
+
+    tasks.withType(JavaCompile).configureEach {
+        options.compilerArgs << '-Xlint:deprecation'
+    }
 }
 
 dependencies {
