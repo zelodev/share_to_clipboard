@@ -26,9 +26,19 @@ android {
         sourceCompatibility JavaVersion.VERSION_24
         targetCompatibility JavaVersion.VERSION_24
     }
+
+    signingConfigs {
+        release {
+            storeFile file("keystore.jks")
+            storePassword System.getenv("KEYSTORE_PASSWORD")
+            keyAlias System.getenv("KEY_ALIAS")
+            keyPassword System.getenv("KEY_PASSWORD")
+        }
+    }
     
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled = true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
@@ -41,25 +51,6 @@ android {
 
     lint {
         disable 'MissingTranslation'
-    }
-
-    if (System.getenv("signingStoreLocation") != null &&
-    System.getenv("signingKeyAlias") != null) {
-
-        println "Found sign properties in gradle.properties! Signing build…"
-
-        signingConfigs {
-            release {
-                storeFile = file(System.getenv("signingStoreLocation"))
-                storePassword = System.getenv("KSTOREPWD")
-                keyAlias = System.getenv("signingKeyAlias")
-                keyPassword = System.getenv("KSTOREPWD")
-            }
-        }
-
-        buildTypes.release.signingConfig = signingConfigs.release
-    } else {
-        buildTypes.release.signingConfig = null
     }
 
     tasks.withType(JavaCompile).configureEach {
