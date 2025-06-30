@@ -3,25 +3,25 @@ plugins {
 }
 
 android {
-    namespace 'com.tengu.sharetoclipboard'
-    compileSdk 36
+    namespace = 'com.tengu.sharetoclipboard'
+    compileSdk = 36
 
     defaultConfig {
-        applicationId "com.tengu.sharetoclipboard"
-        minSdk = 15
+        applicationId = "com.tengu.sharetoclipboard"
+        minSdk = 21
         targetSdk = 36
         versionCode = 33
-        versionName "1.15.1"
+        versionName = "1.15.1"
     }
 
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled = true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
 
         debug {
-            minifyEnabled false // ❗Changed to false to fix warning
+            minifyEnabled = false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
@@ -37,10 +37,10 @@ android {
 
         signingConfigs {
             release {
-                storeFile file(signingStoreLocation)
-                storePassword System.getenv("KSTOREPWD")
-                keyAlias signingKeyAlias
-                keyPassword System.getenv("KSTOREPWD")
+                storeFile = file(signingStoreLocation)
+                storePassword = System.getenv("KSTOREPWD")
+                keyAlias = signingKeyAlias
+                keyPassword = System.getenv("KSTOREPWD")
             }
         }
 
