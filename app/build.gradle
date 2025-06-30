@@ -2,6 +2,14 @@ plugins {
     id 'com.android.application' version '8.11.0'
 }
 
+configurations.all {
+    resolutionStrategy.eachDependency { details ->
+        if (details.requested.group == 'org.jetbrains.kotlin') {
+            details.useVersion '1.8.22'
+        }
+    }
+}
+
 android {
     namespace = 'com.tengu.sharetoclipboard'
     compileSdk = 36
