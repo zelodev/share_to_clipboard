@@ -8,7 +8,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat;
 import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.view.Window;
