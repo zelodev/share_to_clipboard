@@ -13,4 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
+rootProject.name = "share_to_clipboard"
 include(":app")
